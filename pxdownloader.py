@@ -36,7 +36,7 @@ class Getter:
                 try:
                     html = requests.get('https://www.pixiv.net/bookmark.php?id=%s&rest=show&p=%s' % (str(self.id), i), headers=header, proxies=proxies).content
                 except Exception:
-                    print('貌似触发反爬，睡觉五秒')
+                    print('触发反爬，睡觉五秒')
                     time.sleep(5)
                     continue
                 i += 1
@@ -76,7 +76,7 @@ class Getter:
                     one_step_result = requests.get(
                         url='https://api.imjad.cn/pixiv/v1/?type=%s&id=%s&per_page=1000&page=%s&word=%s' % (_type, self.id, page, self.word)).json()
                 except Exception as e:
-                    print('Error:%s' % e, '正在重试，请检查您的网络连接=w=')
+                    print('Error:%s' % e, '正在重试，请检查您的网络连接')
                     continue
                 if one_step_result is False:
                     continue
@@ -95,7 +95,7 @@ class Getter:
                         one_step_result = requests.get(
                             url='https://api.imjad.cn/pixiv/v1/?type=illust&id=%s' % (id)).json()
                     except Exception as e:
-                        print('Error:%s' % e, '正在重试，请检查您的网络连接=w=')
+                        print('Error:%s' % e, '正在重试，请检查您的网络连接')
                         continue
                     print("[illust_getter]:已经获取一张图片")
                     try:
@@ -140,6 +140,7 @@ class CheckerThreading(threading.Thread):
                 break
 
 
+# 此处的轮子来自于@xyqyear
 class Checker:
 
     def __init__(self, _illusts, threading_num, images_count):
@@ -218,6 +219,7 @@ class DownloadThreading(threading.Thread):
                         continue
             else:
                 break
+# 此处的轮子来自于@xyqyear
 class Downloader:
 
     def __init__(self, urls_list, threading_num, _folder):
@@ -308,8 +310,6 @@ for illust in illusts:
         pages = illust['metadata']['pages']
         for url in pages:
             urls.append(url['image_urls']['large'])
-    # ids列表里包含了所有被下载的图的id,因为前面遇到R18直接continue掉了
-    # 所以并不需要在每个if，else里面都加一个这一行
     illust_index += 1
     if illust_index == images_count:
         break
