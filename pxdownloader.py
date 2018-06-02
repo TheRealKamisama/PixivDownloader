@@ -140,7 +140,6 @@ class CheckerThreading(threading.Thread):
                 break
 
 
-# 此处的轮子来自于@xyqyear
 class Checker:
 
     def __init__(self, _illusts, threading_num, images_count):
@@ -219,7 +218,7 @@ class DownloadThreading(threading.Thread):
                         continue
             else:
                 break
-# 此处的轮子来自于@xyqyear
+
 class Downloader:
 
     def __init__(self, urls_list, threading_num, _folder):
